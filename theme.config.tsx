@@ -12,6 +12,9 @@ const config: DocsThemeConfig = {
       </svg>
     )
   },
+  nextThemes: {
+    forcedTheme: 'light',
+  },
   footer: {
     text: 'Games API',
   },

@@ -13,11 +13,10 @@ const config: DocsThemeConfig = {
     )
   },
   nextThemes: {
-    enableSystem: false,
     forcedTheme: 'light',
   },
   footer: {
-    text: 'Games API',
+    text: 'Slotsgateway API',
   },
   editLink: {
     text: null,

@@ -3,8 +3,6 @@ import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
   logo: <span>SLotsgateway API</span>,
-  enableSystem: false,
-  forcedTheme: "light",
   chat: {
     link: 'https://t.me/slotsgateway',
     icon: (
@@ -30,6 +28,9 @@ const config: DocsThemeConfig = {
   ),
   useNextSeoProps() {
   return {
+    enableSystem: false,
+    forcedTheme: "light",
+      
     titleTemplate: '%s – Slotsgateway Casino API Documentation'
    }
   },

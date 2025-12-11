@@ -7,82 +7,26 @@ import { Steps } from 'nextra/components'
 <Steps>
 ### Create Account
 
-If you haven't already, make sure to first create your Slotsgateway Account through the [register form](https://backoffice.slotsgateway.com).
+If you haven't already, make sure to first create your Slotsgateway Account through the [register form](https://backoffice.slotsgateway.com/register).
 
 
-```sh npm2yarn
-npm i next react react-dom nextra nextra-theme-docs
-```
+### API Settings
 
-> [!NOTE]
->
-> If you already have Next.js installed in your project, you only need to
-> install `nextra` and `nextra-theme-docs` as the add-ons.
+Setup your callback URL on `Settings` page within the Slotsgateway Client Area. This is the URL where we will send all game result data.
+
+### Grab Region URL
+
+Grab the region URL, it is where you will send request to us.
 
 
-```jsx filename="app/layout.jsx"
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Banner, Head } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
-import 'nextra-theme-docs/style.css'
+### Integrate
 
-export const metadata = {
-  // Define your metadata here
-  // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
-}
+Integrate our API within your casino project.
 
-const banner = <Banner storageKey="some-key">Nextra 4.0 is released 🎉</Banner>
-const navbar = (
-  <Navbar
-    logo={<b>Nextra</b>}
-    // ... Your additional navbar options
-  />
-)
-const footer = <Footer>MIT {new Date().getFullYear()} © Nextra.</Footer>
-
-export default async function RootLayout({ children }) {
-  return (
-    <html
-      // Not required, but good for SEO
-      lang="en"
-      // Required to be set
-      dir="ltr"
-      // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
-      suppressHydrationWarning
-    >
-      <Head
-      // ... Your additional head options
-      >
-        {/* Your additional tags should be passed as `children` of `<Head>` element */}
-      </Head>
-      <body>
-        <Layout
-          banner={banner}
-          navbar={navbar}
-          pageMap={await getPageMap()}
-          docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
-          footer={footer}
-          // ... Your additional layout options
-        >
-          {children}
-        </Layout>
-      </body>
-    </html>
-  )
-}
-```
 
 
 </Steps>
 
-See the [File Conventions](/docs/file-conventions) for more details on
-organizing your documentation structure, and check out the
-[Layout Component](/docs/docs-theme/built-ins/layout) for configuring the docs
-site's theme.
-## Seamless Wallet
-We make use of the `seamless wallet` principal. This means that you control the player's balance/funds completely. 
-
-We simply let you know what happens on the game and inform you of each game action.
 
 ## PHP Client
 If you are using PHP on your project, we have a composer package available to assist you with integrating our games API.

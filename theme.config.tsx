@@ -13,6 +13,7 @@ const config: DocsThemeConfig = {
     )
   },
   nextThemes: {
+    enableSystem: false,
     forcedTheme: 'light',
   },
   footer: {

@@ -20,6 +20,7 @@ const config: DocsThemeConfig = {
   feedback: {
     content: null,
   },
+  enableSystem: 'false',      
   head: (
     <>
       <meta property="og:description" content="Documentation for Slotsgateway's Casino API" />
@@ -28,9 +29,6 @@ const config: DocsThemeConfig = {
   ),
   useNextSeoProps() {
   return {
-    enableSystem: false,
-    forcedTheme: "light",
-      
     titleTemplate: '%s – Slotsgateway Casino API Documentation'
    }
   },

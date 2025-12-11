@@ -2,7 +2,7 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>SLotsgateway API</span>,
+  logo: <span>Slotsgateway API</span>,
   darkMode: false,
   chat: {
     link: 'https://t.me/slotsgateway',

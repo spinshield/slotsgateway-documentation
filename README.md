@@ -1,5 +1,5 @@
-# Spinshield Docs
-Games documentation
+# Slotsgateway Docs
+Games documentation for https://slotsgateway.com
 
 # Contact
-https://t.me/wrccwest
+https://t.me/slotsgateway

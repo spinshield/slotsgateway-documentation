@@ -1,16 +1,32 @@
 # addFreeRounds Method
-This method adds free spins to player. If player is already playing on the slotmachine, it will start the free rounds on the next available spin/init.
 
-Please note that exact bet amount cannot be set instead this is specified as bet level. Bet level can be set from 0 to max 6. If you want to see the exact bet amount, credit yourself free spins and check in the game.
+The `addFreeRounds` method assigns free spins to a player for a specific slot game.  
+If the player is already playing the slot, the free spins will start on the **next available spin or game initialization**.
 
-It is possible that bet levels and it's corresponding bet amounts do change over time. After the first free spin has been played, the exact bet amount will be updated on the free spins session.
+Free spins are configured using a **bet level**, not a fixed bet amount.  
+Bet levels range from `0` to a maximum of `6`.
 
-If player already has an active free spins session on the specific slotmachine, the free spins are added on top of the already existing slot machine and the validity date is extended.
+> To view the exact bet amount for a given bet level, you can credit free spins to yourself and check the value directly inside the game.
 
-Important: `bet_level` can not be updated on yet active sessions. So if you use different `bet_level` free spins it's safest to split these per slotmachine you give these free spins on to not have any overlap.
+### Bet Level Notes
 
+- Bet levels and their corresponding bet amounts **may change over time**
+- After the **first free spin is played**, the exact bet amount will be locked and stored for that free spins session
+- If the player already has an **active free spins session** for the same slot:
+  - New free spins will be **added to the existing session**
+  - The session’s **validity date will be extended**
 
-### Method Request
+⚠️ **Important**
+
+- `bet_level` **cannot be changed** for an already active free spins session
+- If you plan to issue free spins with different bet levels, it is strongly recommended to:
+  - Split them across different slot machines
+  - Avoid overlapping free spins sessions on the same game
+
+---
+
+## Method Request
+
 ```json
 {
   "api_login" : "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
@@ -26,7 +42,10 @@ Important: `bet_level` can not be updated on yet active sessions. So if you use 
 }
 ```
 
-### Succesful Response
+---
+
+## Successful Response
+
 ```json
 {
   "error": 0,

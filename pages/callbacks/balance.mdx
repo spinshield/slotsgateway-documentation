@@ -1,11 +1,28 @@
 # Callback Action: balance
-This callback will be sent to your callback URL, specified within the [backoffice](/2-backoffice). We will send this callback at start of game. You should always return balance on integer format.
 
-The call_id is a unique id sent with each callback and can be considered the transaction id.
+The `balance` callback is sent to your **callback URL**, configured in the  
+[Backoffice](/2-backoffice).
+
+This callback is triggered **at the start of a game session** and is used to retrieve the player’s current balance.
+
+You must always return the player balance as an **integer value in cents**.
+
+The `call_id` is a **unique identifier** sent with every callback and can be treated as a transaction reference.
+
+⚠️ **Important**
+
+- Your callback endpoint must always respond with **HTTP status code `200`**
+- This applies to **all responses**, including errors
+- Error handling is done **only via the JSON body**, not HTTP status codes
+
+---
 
 ## Requests
-Requests are sent as `GET` to your callback url, specified on your API key.
-### Balance Callback
+
+All callbacks are sent as **`GET` requests** to the callback URL configured on your API key.
+
+### Balance Callback Request
+
 ```json
 {
   "username": "yourPlayerId9959",
@@ -17,28 +34,45 @@ Requests are sent as `GET` to your callback url, specified on your API key.
 }
 ```
 
+---
+
 ## Responses
-Balance must be returned as integer and in cents, that means if your player's balance is `2.50$` this should be returned as `250`.
-### Succesful Response:
+
+The balance must always be returned as an **integer in cents**.
+
+> Example:  
+> A player balance of `$2.50` must be returned as `250`.
+
+All responses **must return HTTP status code `200`**.
+
+### Successful Response
+
 ```json
-  {
-    "error": 0,
-    "balance": 250
-  }
+{
+  "error": 0,
+  "balance": 250
+}
 ```
+
+---
 
 ### Insufficient Balance
+
 ```json
-  {
-    "error": 1,
-    "balance": 250
-  }
+{
+  "error": 1,
+  "balance": 250
+}
 ```
 
-### Processing Error (for example player not found or invalid signature)
+---
+
+### Processing Error  
+*(e.g. player not found or invalid signature)*
+
 ```json
-  {
-    "error": 2,
-    "balance": 0
-  }
+{
+  "error": 2,
+  "balance": 0
+}
 ```

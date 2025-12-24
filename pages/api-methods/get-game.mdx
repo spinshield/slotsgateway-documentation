@@ -2,14 +2,11 @@
 
 The `getGame` method opens a **real-money game session** and returns a game launch URL that should be served directly to the player.
 
-Before calling this method, you should **always invoke the  
-[`createPlayer` method](/api-methods/create-player)** to ensure the player exists in the Slotsgateway system.
+Before calling this method, you should **always invoke the [createPlayer method](/api-methods/create-player)** to ensure the player exists in the Slotsgateway system.
 
-When specifying the game, you must always use the `id_hash` value returned by the  
-[`getGameList` method](/api-methods/gamelist).
+When specifying the game, you must always use the `id_hash` value returned by the [getGameList method](/api-methods/gamelist).
 
-To open a **demo (fun-play) session**, use the  
-[`getGameDemo` method](/api-methods/get-game-demo) instead.
+To open a **demo (fun-play) session**, use the [getGameDemo method](/api-methods/get-game-demo) instead.
 
 ---
 

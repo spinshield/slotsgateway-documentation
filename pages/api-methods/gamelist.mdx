@@ -1,25 +1,36 @@
 # getGameList Method
-This method returns all available games.
 
-You should always use the `id_hash` variable when opening game using the [getGame method](/api-methods/get-game).
+The `getGameList` method returns a list of all games available for the selected currency.
 
-Games that are eligible for the [addFreeRounds method](/api-methods/add-freerounds) are returned as `freerounds_supported: true`.
+When opening a game session using the  
+[`getGame` method](/api-methods/get-game), you should **always use the `id_hash` value** provided in the game list.
 
-### Method Request
+Games that support free spins via the  
+[`addFreeRounds` method](/api-methods/add-freerounds) are marked with  
+`freerounds_supported: true`.
+
+---
+
+## Method Request
+
 ```json
 {
-  "api_login" : "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
+  "api_login": "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
   "api_password": "dqRin2nfLosij2n88",
   "method": "getGameList",
-  "show_additional": true, 
-  "show_systems" : 0,
-  "list_type" : 1,
+  "show_additional": true,
+  "show_systems": 0,
+  "list_type": 1,
   "currency": "USD"
 }
 ```
 
+---
 
-### Succesful Response (list_type: 1)
+## Successful Response
+
+This response format returns **full game metadata**, including images and feature flags.
+
 ```json
 {
   "error": 0,
@@ -66,43 +77,6 @@ Games that are eligible for the [addFreeRounds method](/api-methods/add-freeroun
       "image_long": "https://cdn2.softswiss.net/bets/i/s6/spinomenal/FruitsOnIceCollection40Lines.webp",
       "currency": "USD"
     }
-  ]
-}
-```
-
-
-### Succesful Response (list_type: 2)
-```json
-{
-	"error": 0,
-	"response": [
-		{
-			"n": "Dice Bonanza",
-			"p": "bgaming",
-			"s": "softswiss/DiceBonanza",
-			"fs": false,
-			"fb": false,
-			"d": true,
-			"id": 41
-		},
-		{
-			"n": "Luck & Magic",
-			"p": "bgaming",
-			"s": "softswiss/LuckAndMagic",
-			"fs": false,
-			"fb": false,
-			"d": true,
-			"id": 40
-		},
-		{
-			"n": "Hit The Route",
-			"p": "bgaming",
-			"s": "softswiss/HitTheRoute",
-			"fs": true,
-			"fb": false,
-			"d": true,
-			"id": 39
-		}
   ]
 }
 ```

@@ -5,7 +5,7 @@ The `debit` and `credit` callbacks are used to **update a player’s balance** b
 - `debit` → subtract the `amount` from the player balance  
 - `credit` → add the `amount` to the player balance  
 
-If the player does not have sufficient funds during a `debit` action, return the **insufficient balance** response (`error: 1`).
+If the player does not have sufficient funds during a `debit` action, return the **insufficient balance** response (`error: 1`) with the current player's `balance`.
 
 The `call_id` is a **unique transaction identifier** and should be treated as the reference ID for the callback.
 

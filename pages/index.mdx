@@ -1,119 +1,137 @@
-#  Getting Started
-Getting started with Slotsgateway is easy, however if you do run into any issues please [contact support](https//t.me/slotsgateway).
+# Getting Started
+
+Getting started with Slotsgateway is straightforward. If you run into any issues, please [contact support](https//t.me/slotsgateway).
 
 import { Steps } from 'nextra/components'
 
 ## Account Configuration
 
 <Steps>
-### Create Account
-If you haven't already, make sure to create your Slotsgateway Account through the [register form](https://backoffice.slotsgateway.com/register).
 
-### Set your Callback
-Setup your callback URL on `Settings` page within the Slotsgateway Client Area. This is the URL where we will send all game result data.
+## Create an Account
+Create a **Slotsgateway** account using the [registration form](https://backoffice.slotsgateway.com/register) (if you don’t already have one).
 
-### Grab API URL
-Grab the API url from your Region settings, it is where you will send request to us.
+## Set Your Callback URL
+In the **Settings** section of the Slotsgateway Client Area, set your callback URL.  
+This endpoint will receive all game-related callbacks, including game result data.
 
-### Integrate
-Integrate our API within your casino project.
+## Find Your API Base URL
+In your **Region** settings, copy the API base URL.  
+Your system will send all API requests to this endpoint.
+
+## Integrate the API
+Use the provided endpoints and your credentials to integrate the Slotsgateway API into your casino platform.
+
 </Steps>
 
-
 ## PHP Client
-If you are using PHP on your project, we have a composer package available to assist you with integrating our games API.
 
-For more details check the [package on github](https://github.com/spinshield/spinclient) or run `composer require spinshield/spinclient` to get started.
+If your project uses PHP, we provide a Composer package to speed up integration.
 
-## API Methods
-When you send requests to our game server, this should be `POST` request and include JSON body content.
+- GitHub package: [spinshield/spinclient](https://github.com/spinshield/spinclient)  
+- Install via Composer: `composer require spinshield/spinclient`
 
-Your JSON body content should always include your `api_login` and your `api_password`, these details can be found within the [backoffice](/2-backoffice).
+## API Requests
+
+All requests to the game server should be sent as `POST` requests with a JSON body.
+
+Your request body must always include `api_login` and `api_password`.  
+You can find these credentials in the [backoffice](/2-backoffice).
 
 ```json
 {
-  "api_login" : "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
-  "api_password": "dqRin2nfLosij2n88",
-  ...
+  "api_login": "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
+  "api_password": "dqRin2nfLosij2n88"
 }
 ```
 
 ## Callback Communication
-Our game server sends `GET` requests to your callback URL and always expects a JSON response that include error code and player balance. If player balance can not be retrieved for whatever reason, you should return `0` as balance.
 
-All balance must be returned as integer and in cents, that means if your player's balance is `2.50$` this should be returned as `250`.
+Our game server sends `GET` requests to your callback URL and expects a JSON response containing:
 
-### Succesful Response
+- `error` (error code)
+- `balance` (player balance)
+
+If you cannot retrieve the player balance for any reason, return `0`.
+
+**Balance must be an integer in cents.**  
+Example: a balance of `2.50$` must be returned as `250`.
+
+### Successful Response
 ```json
-  {
-    "error": 0,
-    "balance": 250
-  }
+{
+  "error": 0,
+  "balance": 250
+}
 ```
 
 ### Insufficient Balance Response
 ```json
-  {
-    "error": 1,
-    "balance": 250
-  }
+{
+  "error": 1,
+  "balance": 250
+}
 ```
 
-### Processing Error (for example player not found or invalid signature)
+### Processing Error
 ```json
-  {
-    "error": 2,
-    "balance": 0
-  }
+{
+  "error": 2,
+  "balance": 0
+}
 ```
 
 ## Default API Sequence
-### Opening Real Game Session
-| Order        | API Method |   Docs |
-| :------------ | :---------: | ----------: |
-| #1        |    createPlayer    | [read](/api-methods/create-player) |
-| #2        |    getGame    | [read](/api-methods/get-game) |
 
-### Opening Demo Game Session
-| Order        | API Method |   Docs |
-| :------------ | :---------: | ----------: |
-| #1        |    getGameDemo    | [read](/api-methods/get-game-demo) |
+### Open a Real-Money Game Session
 
-### Opening Free Spins Bonus Game Session
-| Order        | API Method |   Docs |
-| :------------ | :---------: | ----------: |
-| #1        |    createPlayer    | [read](/api-methods/create-player) |
-| #2        |    addFreeRounds    | [read](/api-methods/add-freerounds) |
-| #3        |    getGame    | [read](/api-methods/get-game) |
+| Order | API Method   | Docs |
+|------:|--------------|------|
+| #1    | createPlayer | [read](/api-methods/create-player) |
+| #2    | getGame      | [read](/api-methods/get-game) |
 
+### Open a Demo Game Session
+
+| Order | API Method  | Docs |
+|------:|-------------|------|
+| #1    | getGameDemo | [read](/api-methods/get-game-demo) |
+
+### Open a Free Spins Bonus Game Session
+
+| Order | API Method     | Docs |
+|------:|----------------|------|
+| #1    | createPlayer  | [read](/api-methods/create-player) |
+| #2    | addFreeRounds | [read](/api-methods/add-freerounds) |
+| #3    | getGame       | [read](/api-methods/get-game) |
 
 ## Supported Game Currencies
-Use ID when creating player and consecutively opening game.
 
-Additional and any currencies are available per request, depending on your project & game provider.
+Use the currency **ID** when creating a player and opening a game session.
 
-| id        | currency | symbol |
-| :------------ | :---------: | ----------: |
-| USD        |    US Dollar    | $ |
-| EUR        |    Euro    | € |
-| GBP        |    British Pound    | £ |
-| BRL        |    Brazillian Real  | R$ |
-| AUD        |    Australian Dollar   | AU$ |
-| CAD        |    Canadian Dollar   | CA$ |
-| NZD        |    New Zealand Dollar   | $ |
-| TND        |    Tunisian Dinar   | DT |
+Additional currencies may be available on request depending on your project and game provider.
 
+| id  | currency           | symbol |
+|-----|--------------------|--------|
+| USD | US Dollar          | $ |
+| EUR | Euro               | € |
+| GBP | British Pound      | £ |
+| BRL | Brazillian Real    | R$ |
+| AUD | Australian Dollar  | AU$ |
+| CAD | Canadian Dollar    | CA$ |
+| NZD | New Zealand Dollar | $ |
+| TND | Tunisian Dinar     | DT |
 
-## Supported Game Language
-Use ID when opening game to set game language.
+## Supported Game Languages
 
-| id        | language |
-| :------------ | :---------: | 
-| en        |    English    |
-| fr        |    French    |
-| de        |    German    |
-| tr        |    Turkish    |
-| ru        |    Russian    |
-| nl        |    Dutch    |
-| pt        |    Portuguese    |
-| es        |    Spanish    |
+Use the language **ID** when opening a game to set the game language.
+
+| id | language |
+|----|----------|
+| en | English |
+| fr | French |
+| de | German |
+| tr | Turkish |
+| ru | Russian |
+| nl | Dutch |
+| pt | Portuguese |
+| es | Spanish |

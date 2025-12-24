@@ -1,27 +1,47 @@
-# Callback Action: debit/credit
-Depending on the callback action you should credit/debit your player's balance for the `amount` given on callback. 
+# Callback Action: debit / credit
 
-If player does not have enough balance on `debit` action, you should return the insufficient balance response (error: 1) like shown below.
+The `debit` and `credit` callbacks are used to **update a player’s balance** based on gameplay actions.
 
-The `call_id` is a unique id sent with each callback and can be considered the transaction id.
+- `debit` → subtract the `amount` from the player balance  
+- `credit` → add the `amount` to the player balance  
 
-## Important note
-You should allow `credit` action and `debit` action independently of each other.
+If the player does not have sufficient funds during a `debit` action, return the **insufficient balance** response (`error: 1`).
 
-There are rare cases where a `credit` callback can be sent without first sending a `debit` callback, per example in case of rollback/refund system activated.
-In this case if you need tie it to a `debit` action, look up the most recent `debit` transaction in your system for specified `username`, `game_id` & `currency` and attach the `credit` to that round ID.
+The `call_id` is a **unique transaction identifier** and should be treated as the reference ID for the callback.
 
-In some game providers there may be rare occurances where new `round_id` is made on each game action. This may also affect `gameplay_final` in rare cases.
+⚠️ **Important**
+
+- Your callback endpoint must **always return HTTP status code `200`**
+- This applies to **all responses**, including errors
+- Errors must be communicated **only via the JSON response body**
+
+---
+
+## Key Behavior Rules
+
+- Handle `debit` and `credit` actions **independently**
+- A `credit` callback **may arrive without a prior `debit`** (e.g. rollback or refund scenarios)
+- If you need to associate a `credit` with a previous round, link it to the **most recent debit** for the same `username`, `game_id`, and `currency`
+- Some providers may generate a new `round_id` for each action; this can also affect `gameplay_final`
+
+---
 
 ## Rollbacks
-Any rollback events, which can both be `debit` or `credit` action will be marked under the `rb` variable on our callbacks.
 
-When `rb` is set to `1` it means the action is a rollback. The original round_id should be included and you should proceed to either `debit` or `credit` the player's balance like you would on a regular callback.
+Rollback actions are marked with `rb: 1`.
+
+- Rollbacks can be either `debit` or `credit`
+- The original `round_id` is included
+- Process rollback callbacks the same way as regular debit/credit actions
+
+---
 
 ## Requests
-Requests are sent as `GET` to your callback url, which is specified on your API key configuration.
+
+All callbacks are sent as **`GET` requests** to your configured callback URL.
 
 ### Spin Callback
+
 ```json
 {
   "amount": 100,
@@ -39,7 +59,10 @@ Requests are sent as `GET` to your callback url, which is specified on your API 
 }
 ```
 
+---
+
 ### Rollback Spin Callback
+
 ```json
 {
   "amount": 100,
@@ -57,10 +80,15 @@ Requests are sent as `GET` to your callback url, which is specified on your API 
 }
 ```
 
-### Free Round Spin Callback
-This callback is sent when player is playing on gifted free rounds, after using the [addFreeRounds method](/api-methods/add-freerounds).
+---
 
-**You should not deduct a player's balance on debit callbacks when `type` variable is set to `bonus_fs`.**
+### Free Round Spin Callback
+
+This callback is sent when a player is playing **free spins** awarded via  
+[`addFreeRounds`](/api-methods/add-freerounds).
+
+**Do not deduct the player’s balance** on `debit` callbacks when `type` is `bonus_fs`.
+
 ```json
 {
   "amount": 25,
@@ -77,37 +105,52 @@ This callback is sent when player is playing on gifted free rounds, after using 
   "rb": 0,
   "key": "ed3a34c119wec67fb8e37691b5885f0",
   "freespins": {
-      "id": 7,
-      "total": 20,
-      "performed": 3
+    "id": 7,
+    "total": 20,
+    "performed": 3
   }
 }
 ```
 
+---
+
 ## Responses
-Balance must be returned as integer and in cents, that means if your player's balance is `2.50$` this should be returned as `250`.
-### Succesful Response
+
+The balance must always be returned as an **integer in cents**.
+
+> Example:  
+> `$2.50` → `250`
+
+All responses **must return HTTP status code `200`**.
+
+### Successful Response
+
 ```json
-  {
-    "error": 0,
-    "balance": 250
-  }
+{
+  "error": 0,
+  "balance": 250
+}
 ```
+
+---
 
 ### Insufficient Balance
+
 ```json
-  {
-    "error": 1,
-    "balance": 250
-  }
+{
+  "error": 1,
+  "balance": 250
+}
 ```
 
-### Processing Error (for example player not found or invalid signature)
+---
+
+### Processing Error  
+*(e.g. player not found or invalid signature)*
+
 ```json
-  {
-    "error": 2,
-    "balance": 0
-  }
+{
+  "error": 2,
+  "balance": 0
+}
 ```
-
-

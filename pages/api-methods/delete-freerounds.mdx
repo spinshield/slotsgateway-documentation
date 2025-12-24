@@ -1,10 +1,16 @@
 # deleteFreeRounds Method
-This deactivates all active free rounds for specific player on specified slotmachine.
 
-### Method Request
+The `deleteFreeRounds` method deactivates **all active free spins** for a specific player on a **single slot machine**.
+
+This action immediately cancels any currently active free spins session associated with the specified game.
+
+---
+
+## Method Request
+
 ```json
 {
-  "api_login" : "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
+  "api_login": "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
   "api_password": "dqRin2nfLosij2n88",
   "method": "deleteFreeRounds",
   "gameid": "softswiss/LuckyCrew",
@@ -14,13 +20,21 @@ This deactivates all active free rounds for specific player on specified slotmac
 }
 ```
 
-# deleteAllFreeRounds Method
-This deactivates all active free rounds for specific player on all slotmachines.
+---
 
-### Method Request
+# deleteAllFreeRounds Method
+
+The `deleteAllFreeRounds` method deactivates **all active free spins** for a specific player **across all slot machines**.
+
+This action immediately cancels every free spins session currently assigned to the player, regardless of the game.
+
+---
+
+## Method Request
+
 ```json
 {
-  "api_login" : "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
+  "api_login": "d13b1ceb-6209-4163-b1cf-f304c28b81ec",
   "api_password": "dqRin2nfLosij2n88",
   "method": "deleteAllFreeRounds",
   "user_username": "yourPlayerId9959",
